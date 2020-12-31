@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import './App.css';
+import { HashRouter, Route } from 'react-router-dom'
+import Home from './pages/Home';
+import About from './pages/About';
+import './App.scss';
 
 class App extends Component {
   constructor(props) {
@@ -9,9 +12,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>system manage</h1>
-      </div>
+      <HashRouter>
+        <Route exact component={Home} path="/" />
+        <Route component={About} path="/about" />
+      </HashRouter>
     )
   }
 }
