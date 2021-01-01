@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import './index.scss'
+import { Button } from "antd";
 
 class Home extends Component {
   constructor(props) {
@@ -7,7 +9,12 @@ class Home extends Component {
   }
 
   render() {
-    return <div>Home</div>
+    return (
+      <div>
+        <a>home</a>
+        <Button type="primary">按钮</Button>
+      </div>
+    )
   }
 }
 
