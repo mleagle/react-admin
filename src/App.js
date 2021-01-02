@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom'
 import Home from './pages/Home';
 import About from './pages/About';
+import Login from "./pages/Login";
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends Component {
       <HashRouter>
         <Route exact component={Home} path="/" />
         <Route component={About} path="/about" />
+        <Route component={Login} path="/login" />
       </HashRouter>
     )
   }
