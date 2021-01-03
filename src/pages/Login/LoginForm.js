@@ -1,21 +1,41 @@
 import react, { Component, Fragment } from "react";
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Row, Col } from 'antd';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Login } from "../../api/account";
+import Code from "../../components/code";
 
 class LoginForm extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            loading: false,
+            buttonDisabled: false,
+            codeText: '获取验证码',
+            username: ''
+        };
     }
 
+    /**
+     * 登录
+     * @param {*} values 
+     */
     onFinish = (values) => {
-        Login().then(response => {
+        Login(values).then(response => {
             console.log("success", response)
         }).catch(error => {
             console.log("error", error)
         });
     }
+
+    /**
+     * 输入change事件
+     * @param {*} e 
+     */
+    inputChange = (e) => {
+        this.setState({
+            username: e.target.value
+        });
+    }   
 
     toggleForm = ()=> {
         this.props.toggleForm('register');
@@ -44,7 +64,7 @@ class LoginForm extends Component {
                             { type: 'email', message: '请输入正确的邮箱!',},
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="邮箱" />
+                        <Input prefix={<MailOutlined className="site-form-item-icon" />} onChange={this.inputChange} placeholder="邮箱" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -52,13 +72,20 @@ class LoginForm extends Component {
                     >
                         <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="密码" />
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item
+                        name="code"
+                        rules={
+                            [
+                                { required: true, message: '请输入验证码!'},
+                            ]
+                        }
+                    >
                         <Row gutter={6}>
                             <Col span={16}>
                                 <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="验证码" />
                             </Col>
                             <Col span={8}>
-                                <Button type="danger" block>获取验证码</Button>
+                                <Code username={ this.state.username } />
                             </Col>
                         </Row>
                     </Form.Item>

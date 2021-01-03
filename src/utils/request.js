@@ -8,8 +8,6 @@ const server = axios.create({
 
 // 第二步：添加请求拦截器
 server.interceptors.request.use(function (config) {
-    console.log(process.env.REACT_APP_ENV);
-    console.log(process.env.REACT_APP_API)
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
