@@ -1,0 +1,35 @@
+.layout-wrap {
+    height: 100vh;
+
+    .layout-header {
+        position: relative;
+        z-index: 2;
+        height: 75px;
+        background-color: #ffffff;
+        @include webkit(box-shadow, 0 3px 16px 0 rgba(0, 0, 0, .1));
+    }
+
+    .sider {
+        overflow: auto;
+        height: 100vh;
+        left: 0;
+    }
+
+    .layout-content {
+        border: 20px solid #f7f7ff;
+        background-color: #ffffff;
+        padding: 10px;
+    }
+
+    .trigger {
+        margin-left: -25px;
+        font-size: 18px;
+        line-height: 75px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .trigger:hover {
+        color: #1890ff;
+    }
+}

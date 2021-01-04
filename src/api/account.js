@@ -7,7 +7,7 @@ import server from "../utils/request";
  */
 export function Login(data) {
     return server.request({
-        url: '/login',
+        url: '/login/',
         method: 'post',
         data
     });
@@ -20,8 +20,21 @@ export function Login(data) {
  */
 export function GetSms(data) {
     return server.request({
-        url: '/getSms',
-        method: 'get',
-        params: data
+        url: '/getSms/',
+        method: 'post',
+        data
+    });
+}
+
+/**
+ * 登录
+ * 
+ * @param {*} data 
+ */
+export function Register(data) {
+    return server.request({
+        url: '/register/',
+        method: 'post',
+        data
     });
 }

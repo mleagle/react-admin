@@ -13,7 +13,8 @@ class Code extends Component {
             loading: false,
             buttonDisabled: false,
             codeText: '获取验证码',
-            username: ''
+            username: '',
+            module: props.module
         };
     }
 
@@ -37,7 +38,7 @@ class Code extends Component {
      * 倒计时
      */
     countDowm = () => {
-        let second = 10;
+        let second = 60;
 
         this.setState({
             loading: false,
@@ -82,11 +83,20 @@ class Code extends Component {
 
         let params = {
             username,
-            module: 'login'
+            module: this.state.module
         };
 
         GetSms(params).then(response => {
-            this.countDowm();
+            if(response.data.resCode == 0) {
+                message.success(response.data.message);
+                this.countDowm();
+            } else {
+                this.setState({
+                    loading: false,
+                    buttonDisabled: false,
+                    codeText: '重新获取'
+                });
+            }
         }).catch(error => {
             this.setState({
                 loading: false,

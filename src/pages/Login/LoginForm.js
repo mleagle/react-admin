@@ -1,17 +1,21 @@
 import react, { Component, Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Login } from "../../api/account";
 import Code from "../../components/code";
+import CryptoJS from "crypto-js";
 
 class LoginForm extends Component {
     constructor() {
         super();
         this.state = {
             loading: false,
+            loginLoading: false,
             buttonDisabled: false,
             codeText: '获取验证码',
-            username: ''
+            username: '',
+            module: 'login'
         };
     }
 
@@ -20,10 +24,21 @@ class LoginForm extends Component {
      * @param {*} values 
      */
     onFinish = (values) => {
+        this.setState({
+            loginLoading: true
+        });
+        values.password = CryptoJS.MD5(values.password).toString();
         Login(values).then(response => {
-            console.log("success", response)
+            if(response.data.resCode == 0) {
+                this.setState({
+                    loginLoading: false
+                });
+                this.props.history.push("/index");
+            }
         }).catch(error => {
-            console.log("error", error)
+            this.setState({
+                loginLoading: false
+            });
         });
     }
 
@@ -85,12 +100,12 @@ class LoginForm extends Component {
                                 <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="验证码" />
                             </Col>
                             <Col span={8}>
-                                <Code username={ this.state.username } />
+                                <Code username={ this.state.username } module={this.state.module} />
                             </Col>
                         </Row>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button" block>登录</Button>
+                        <Button type="primary" htmlType="submit" loading={this.state.loginLoading} className="login-form-button" block>登录</Button>
                     </Form.Item>
                 </Form>
                 </div>
@@ -100,4 +115,4 @@ class LoginForm extends Component {
 
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

@@ -1,18 +1,33 @@
 import react, { Component, Fragment } from "react";
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import Code from "../../components/code";
+import { Register } from "../../api/account";
+import CryptoJS from "crypto-js";
 
 class RegisterForm extends Component {
     constructor() {
         super();
         this.state = {
-            username: ''
+            username: '',
+            module: 'register'
         };
     }
 
+    /**
+     * 注册
+     * @param {*} values 
+     */
     onFinish = (values) => {
-        console.log(values);
+        values.password = CryptoJS.MD5(values.password).toString();
+        Register(values).then(response => {
+            message.success(response.data.message);
+            if(response.data.resCode == 0) {
+                this.toggleForm();
+            }
+        }).catch(error => {
+            message.error(error.data.message);
+        });
     }
 
      /**
@@ -48,17 +63,17 @@ class RegisterForm extends Component {
                     <Form.Item
                         name="username"
                         rules={[
-                            { required: true, message: '请输入用户名!', }, 
+                            { required: true, message: '请输入邮箱!', }, 
                             { type: 'email', message: '请输入正确的邮箱!',},
                     ]}
                     >
-                        <Input onChange={this.inputChange} prefix={<MailOutlined className="site-form-item-icon" />} placeholder="用户名" />
+                        <Input onChange={this.inputChange} prefix={<MailOutlined className="site-form-item-icon" />} placeholder="请输入邮箱" />
                     </Form.Item>
                     <Form.Item
                         name="password"
                         rules={[{ required: true, message: '请输入密码!', },]}
                     >
-                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="密码" />
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="请输入密码" />
                     </Form.Item>
                     <Form.Item
                         name="repassword"
@@ -71,7 +86,7 @@ class RegisterForm extends Component {
                                         return Promise.resolve();
                                       }
                         
-                                      return Promise.reject('输入两次密码不一样!');
+                                      return Promise.reject('两次密码不一致!');
                                     },
                                   }),
                             ]
@@ -89,15 +104,15 @@ class RegisterForm extends Component {
                     >
                         <Row gutter={6}>
                             <Col span={16}>
-                                <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="验证码" />
+                                <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="请输入验证码" />
                             </Col>
                             <Col span={8}>
-                                <Code username={ this.state.username } />
+                                <Code username={ this.state.username } module={this.state.module} />
                             </Col>
                         </Row>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" className="login-form-button" block>注册</Button>
+                        <Button type="primary" htmlType="submit" className="login-form-button" block>注册</Button>
                     </Form.Item>
                 </Form>
                 </div>
