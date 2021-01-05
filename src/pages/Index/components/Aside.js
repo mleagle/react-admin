@@ -1,13 +1,9 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import { Menu } from 'antd';
-import {
-    DesktopOutlined,
-    PieChartOutlined,
-    FileOutlined,
-    TeamOutlined,
-    UserOutlined,
-  } from '@ant-design/icons';
 import "./Aside.scss";
+
+import Router from "../../../router";
 
 const { SubMenu } = Menu;
 
@@ -19,29 +15,38 @@ class Aside extends Component {
         };
     }
 
+    /**
+     * 渲染Menu
+     */
+    renderMenu = ({title, key, path}) => {
+        return <Menu.Item key={ key }> <Link to={ path }>{ title }</Link></Menu.Item>
+    }
+
+    /**
+     * 渲染SubMenu
+     */
+    renderSubMenu = ({title, key, children}) => {
+        return (
+            <SubMenu key={ key } title={ title }>
+                {
+                   children && children.map(item => {
+                        return item.children && item.children.length > 0 ? this.renderSubMenu(item) : this.renderMenu(item);
+                   })
+                }
+            </SubMenu>
+        );
+    }
+
     render() {
         return(
             <Fragment>
                 <div className="logo" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1" icon={<PieChartOutlined />}>
-                    Option 1
-                    </Menu.Item>
-                    <Menu.Item key="2" icon={<DesktopOutlined />}>
-                    Option 2
-                    </Menu.Item>
-                    <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                    <Menu.Item key="3">Tom</Menu.Item>
-                    <Menu.Item key="4">Bill</Menu.Item>
-                    <Menu.Item key="5">Alex</Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-                    <Menu.Item key="6">Team 1</Menu.Item>
-                    <Menu.Item key="8">Team 2</Menu.Item>
-                    </SubMenu>
-                    <Menu.Item key="9" icon={<FileOutlined />}>
-                    Files
-                    </Menu.Item>
+                <Menu theme="dark" defaultSelectedKeys={['home']} mode="inline">
+                   {
+                       Router && Router.map(item => {
+                            return item.children && item.children.length > 0 ? this.renderSubMenu(item) : this.renderMenu(item);
+                       })
+                   }
                 </Menu>
             </Fragment>
         )

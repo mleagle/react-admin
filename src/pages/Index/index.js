@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Layout } from "antd";
 import Aside from "./components/Aside";
+import InnerContent from "./components/Content";
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -34,7 +35,9 @@ class Index extends Component {
                         onClick: this.toggle,
                     })}
                     </Header>
-                    <Content className="layout-content">Content</Content>
+                    <Content className="layout-content">
+                        <InnerContent />
+                    </Content>
                 </Layout>
             </Layout>
         )
