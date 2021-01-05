@@ -5,6 +5,7 @@ import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Login } from "../../api/account";
 import Code from "../../components/code";
 import CryptoJS from "crypto-js";
+import { setToken } from "../../utils/session"
 
 class LoginForm extends Component {
     constructor() {
@@ -33,6 +34,7 @@ class LoginForm extends Component {
                 this.setState({
                     loginLoading: false
                 });
+                setToken(response.data.data.token);
                 this.props.history.push("/index");
             }
         }).catch(error => {

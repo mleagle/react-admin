@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './pages/Home';
 import About from './pages/About';
 import Login from "./pages/Login";
 import Index from "./pages/Index";
+import SecurityRouter from "./components/SecurityRouter"
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +14,12 @@ class App extends Component {
 
   render() {
     return (
-      <HashRouter>
-        <Route exact component={Home} path="/" />
-        <Route component={Index} path="/index" />
-        <Route component={About} path="/about" />
-        <Route component={Login} path="/login" />
-      </HashRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route exact render={() => <Login />} path="/" />
+          <SecurityRouter component={Index} path="/index" />
+        </Switch>
+      </BrowserRouter>
     )
   }
 }
