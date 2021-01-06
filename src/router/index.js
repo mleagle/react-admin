@@ -37,6 +37,25 @@ const router = [{
                 icon: 'menu',
                 key: 'menu',
                 path: 'system/menu'
+            },
+            {
+                title: '日志监控',
+                icon: 'log',
+                key: 'log',
+                children: [
+                    {
+                        title: '操作日志',
+                        icon: 'oper',
+                        key: 'oper',
+                        path: 'system/log/oper'
+                    },
+                    {
+                        title: '登录日志',
+                        icon: 'login',
+                        key: 'login',
+                        path: 'system/log/login'
+                    }
+                ]
             }
         ]
     }

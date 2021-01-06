@@ -18,7 +18,14 @@ class Index extends Component {
         };
     }
 
+    componentDidMount() {
+        const collapsed = JSON.parse(sessionStorage.getItem("collapsed"));
+        console.log(collapsed);
+        this.setState({ collapsed });
+    }
+
     toggle = () => {
+        sessionStorage.setItem("collapsed", !this.state.collapsed);
         this.setState({
             collapsed: !this.state.collapsed,
         });
