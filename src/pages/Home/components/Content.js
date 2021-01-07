@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch } from 'react-router-dom';
+import ContentRouter from "../../../components/ContentRouter";
 
 class InnerContent extends Component {
   constructor(props) {
@@ -8,11 +8,7 @@ class InnerContent extends Component {
   }
 
   render() {
-    return (
-        <Switch>
-          
-        </Switch>
-    )
+    return <ContentRouter />
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Login from "./pages/Login";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
 import SecurityRouter from "./components/SecurityRouter"
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact render={() => <Login />} path="/" />
-          <SecurityRouter component={Index} path="/index" />
+          <SecurityRouter component={Home} path="/home" />
         </Switch>
       </BrowserRouter>
     )
