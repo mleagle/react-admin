@@ -14,8 +14,15 @@ files.keys().map(key => {
     return false;
   }
 
-  const splits = key.split('/');
-  const path = splits[1].toLowerCase();
+  const splits = key.split('.');
+  const pathTmp = splits[1].toLowerCase();
+
+  let path = pathTmp;
+  if(pathTmp.indexOf('/index') != -1) {
+    let index = pathTmp.indexOf('/index');
+    path = pathTmp.substring(0, index);
+  }
+
   const component = files(key).default;
   
   components.push({
@@ -35,7 +42,6 @@ class ContentRouter extends Component {
         <Switch>
           {
             components.map(item => {
-                console.log(item);
                 <SecurityRouter exact key={item.path} path={item.path} component={item.component} />
             })
           }
