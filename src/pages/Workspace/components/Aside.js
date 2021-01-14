@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Menu } from 'antd';
 import "./Aside.scss";
 
-import Router from "../../../router";
+import Router from "@/router";
 
 const { SubMenu } = Menu;
 
@@ -23,7 +23,7 @@ class Aside extends Component {
         //获取路由
         var pathname = this.props.location.pathname;
         //获取当前所在的目录层级
-        const rank = pathname.split('/')
+        const rank = pathname.split('/');
         //rank = ["","policy-engine","nas-client"]
         switch (rank.length) {
             case 2:  //一级目录
@@ -31,19 +31,18 @@ class Aside extends Component {
                     selectedKeys: [pathname]
                 })
                 break;
-            case 3: //二级目录，要展开一个subMenu
+            case 4: //二级目录，要展开一个subMenu
                 this.setState({
                     selectedKeys: [pathname],
-                    openKeys: [rank.slice(0, 2).join('/')]
+                    openKeys: [rank.slice(0, 3).join('/')]
                 })
                 break;
-            case 4: //三级目录，要展开两个subMenu
+            case 5: //三级目录，要展开两个subMenu
                 this.setState({
                     selectedKeys: [pathname],
-                    openKeys: [rank.slice(0, 2).join('/'), rank.slice(0, 3).join('/')]
+                    openKeys: [rank.slice(0, 3).join('/'), rank.slice(0, 4).join('/')]
                 })
                 break; 
-        
         }
     }
 
@@ -76,7 +75,7 @@ class Aside extends Component {
     onMenuSelect = ({ item, key, keyPath, domEvent }) => {
         this.setState({
             selectedKeys: [key],
-            openKeys: [keyPath[keyPath.length -1]] //获取最后一项
+            openKeys: keyPath.slice(1)
         });
     }
 

@@ -35,7 +35,7 @@ class LoginForm extends Component {
                     loginLoading: false
                 });
                 setToken(response.data.data.token);
-                this.props.history.push("/home");
+                this.props.history.push("/workspace");
             }
         }).catch(error => {
             this.setState({

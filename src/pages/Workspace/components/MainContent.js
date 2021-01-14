@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ContentRouter from "../../../components/ContentRouter";
+import ContentRouter from "@/components/ContentRouter";
 
-class InnerContent extends Component {
+class MainContent extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -12,4 +12,4 @@ class InnerContent extends Component {
   }
 }
 
-export default InnerContent;
+export default MainContent;

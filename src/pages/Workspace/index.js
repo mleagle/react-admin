@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Layout } from "antd";
 import Aside from "./components/Aside";
-import InnerContent from "./components/Content";
+import MainContent from "./components/MainContent";
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -42,7 +42,7 @@ class Index extends Component {
                     })}
                     </Header>
                     <Content className="layout-content">
-                        <InnerContent />
+                        <MainContent />
                     </Content>
                 </Layout>
             </Layout>
