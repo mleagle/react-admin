@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
 import SecurityRouter from "../SecurityRouter";
 
-import User from "@/pages/System/User";
-import Dept from "@/pages/System/Dept";
-
 //自动化工程
 //第一个参数：目录
 //第二个参数：是否查找子目录
@@ -23,7 +20,7 @@ files.keys().map(key => {
   let path = pathTmp;
   if(pathTmp.indexOf('/index') != -1) {
     let index = pathTmp.indexOf('/index');
-    path = '/workspace' + pathTmp.substring(0, index);
+    path = `/workspace${pathTmp.substring(0, index)}`;
   }
 
   const component = files(key).default;
@@ -42,13 +39,11 @@ class ContentRouter extends Component {
   render() {
     return (
         <Switch>
-          <SecurityRouter exact path="/workspace/system/user" component={User} />
-          <SecurityRouter exact path="/workspace/system/dept" component={Dept} />
-          {/* {
+          {
             components.map(item => {
-                <SecurityRouter exact key={item.path} path={item.path} component={item.component} />
+                return <SecurityRouter exact key={item.path} path={item.path} component={item.component} />
             })
-          } */}
+          }
         </Switch>
     )
   }
